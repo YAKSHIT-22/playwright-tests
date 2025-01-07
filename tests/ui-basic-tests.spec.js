@@ -47,3 +47,41 @@ test('basic-validation-tests-locators', async ({page})=>{
     await expect(cardTitle.nth(0)).toHaveText('iphone X');
     await cardTitle.allTextContents();
 })
+
+test.only('basic-validation-tests-ui-controls', async ({page})=>{
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+    // css, xpath can be used to find elements on wepage
+    // CHRO-PATH EXTENSION CAN BE USED TO CHECK CSS BASED LOCATOR
+        //here making reusable locator
+        const usernameInput = page.locator('#username');
+        const passwordInput = page.locator('#password');
+        const dropdown = page.locator('select.form-control');
+        const signIn = page.locator('#signInBtn');
+        const cardTitle = page.locator('.card-body a');
+        const documentLink = page.locator("[href*='documents-request']");
+    await usernameInput.fill('learning');
+    await passwordInput.fill('12345678');
+    await dropdown.selectOption('consult');
+    await page.locator('.radiotextsty').last().click();
+    await page.locator('#okayBtn').click();
+    await expect(page.locator('.radiotextsty').last()).toBeChecked();
+    await page.locator('#terms').click();
+    await expect(page.locator('#terms')).toBeChecked();
+    await page.locator('#terms').uncheck();
+    expect(await page.locator('#terms').isChecked()).toBeFalsy();
+    await expect(documentLink).toHaveAttribute('class', 'blinkingText')
+})
+
+
+test('basic-validation-tests-ui-child-tab-handling', async ({browser})=>{
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+        //here making reusable locator
+        const documentLink = page.locator("[href*='documents-request']");
+    const [newPage] =await Promise.all([
+    context.waitForEvent('page'),
+    documentLink.click()])
+    console.log(await newPage.locator('.red').textContent());
+
+})
