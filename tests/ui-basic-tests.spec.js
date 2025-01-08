@@ -48,7 +48,7 @@ test('basic-validation-tests-locators', async ({page})=>{
     await cardTitle.allTextContents();
 })
 
-test.only('basic-validation-tests-ui-controls', async ({page})=>{
+test('basic-validation-tests-ui-controls', async ({page})=>{
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
     // css, xpath can be used to find elements on wepage
     // CHRO-PATH EXTENSION CAN BE USED TO CHECK CSS BASED LOCATOR
@@ -85,3 +85,17 @@ test('basic-validation-tests-ui-child-tab-handling', async ({browser})=>{
     console.log(await newPage.locator('.red').textContent());
 
 })
+
+
+test.only('basic-validation-tests-codegen', async ({ page }) => {
+    await page.goto('https://www.google.com/');
+    await page.getByLabel('Search', { exact: true }).click();
+    await page.getByLabel('Search', { exact: true }).fill('rahul shetty ');
+    await page.getByText('academy', { exact: true }).click();
+    await page.getByRole('link', { name: 'Rahul Shetty Academy:' }).click();
+    await page.getByRole('link', { name: 'Courses', exact: true }).click();
+    await page.getByText('Hyderabad QA Meetup Rahul').click();
+    const page1Promise = page.waitForEvent('popup');
+    await page.getByRole('button', { name: '[Set a button action]' }).click();
+    const page1 = await page1Promise;
+  });
