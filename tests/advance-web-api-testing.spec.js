@@ -12,11 +12,9 @@ test.beforeAll("login-context-save", async ({browser}) => {
   await signIn.click();
   await page.waitForLoadState('networkidle')
   await context.storageState({path: "auth/state.json"});
-
 });
 
 test("basic-validation-tests-locators", async ({ browser }) => {
-
   const context = await browser.newContext({storageState: 'auth/state.json'});  
   const page = await context.newPage();
   page.goto("https://rahulshettyacademy.com/client")

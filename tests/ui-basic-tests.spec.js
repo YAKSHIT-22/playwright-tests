@@ -17,6 +17,7 @@ test('basic-validation-tests-with-context', async ({browser})=>{
 //     await page.goto('https://google.com');
 
 // })
+
 test('basic-validation-tests-default', async ({page})=>{
     //here we added page only other stuff is already in place in default mode
     await page.goto('https://google.com');
@@ -98,4 +99,4 @@ test.only('basic-validation-tests-codegen', async ({ page }) => {
     const page1Promise = page.waitForEvent('popup');
     await page.getByRole('button', { name: '[Set a button action]' }).click();
     const page1 = await page1Promise;
-  });
+});
