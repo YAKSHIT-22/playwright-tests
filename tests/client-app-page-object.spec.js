@@ -1,12 +1,13 @@
-const {test, expect} = require('@playwright/test');
+const {expect} = require('@playwright/test');
 const { Login } = require('../page-objects/LoginPage');
+const dataSet  = JSON.parse(JSON.stringify(require('../utils/placeOrderTestData.json')));
+const {test}  = require('./test-base.spec');
 
-test('basic-validation-tests-locators-page-object', async ({page})=>{
-    
+test('basic-validation-tests-locators-page-object', async ({page, testDataForOrder})=>{
         const cardTitle = page.locator('.card-body b');
-        const productName = "ADIDAS ORIGINAL"
-        const userEmail = '';
-        const userPassword = '';
+        const productName = dataSet.productName;
+        const userEmail = dataSet.userEmail;
+        const userPassword = dataSet.userPassword;
     const Login = new Login(page);
     await Login.goTo('https://rahulshettyacademy.com/client');
     await Login.validLogin(userEmail, userPassword);
