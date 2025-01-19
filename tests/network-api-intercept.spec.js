@@ -19,6 +19,7 @@ const ordersPayload = {
   }
 let orderResults;
 
+test.describe.configure({mode: "parallel"})
 test.beforeAll('login-api-test', async({})=>{
     const apiContext = await request.newContext();
     const apiUtils = new APIUtils(apiContext, payLoad);
@@ -27,7 +28,7 @@ test.beforeAll('login-api-test', async({})=>{
     orderResults = result;
 })
 
-test('network-interception-tests', async ({page})=>{
+test('@network network-interception-tests', async ({page})=>{
     page.addInitScript(value=>{
         window.localStorage.setItem('token', value);
     }, orderResults.token)
